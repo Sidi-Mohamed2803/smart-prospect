@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="header :: myHeader"></div>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" /> -->
+    <title>Sign in</title>
+
+    <!-- Show/Mask password script -->
+    <script src="/assets/js/personalJS/showPassword.js"></script>
+
+    <!-- Form validation script -->
+    <script src="/assets/js/personalJS/formValidation.js"></script>
+
+</head>
+
+<body>
+    <div class="container position-relative">
+        <div class="card bg-light col-sm-5 col-sm-offset-3 position-absolute top-0 start-50 translate-middle">
+            <div class="card-body">
+                <div class="">
+                    <h1 class="card-title text-center">Veuillez entrer les informations suivantes pour vous inscrire :
+                    </h1>
+                    <hr>
+                    <span class="card-subtitle text-danger">*</span>: obligatoire<br>
+                    <br>
+                    <form th:action="@{/user/signing-in}" method="post" class="needs-validation was-validated"
+                        novalidate>
+                        <div class="form-group form-floating">
+                            <label for="lname">
+                                Prénom : <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control" name="lastName" id="lname" placeholder="Last name:"
+                                required />
+                            <div class="invalid-feedback" hidden>
+                                <center>
+                                    <font class="text-danger">Veuillez renseigner ce champ.</font>
+                                </center>
+                            </div>
+                        </div>
+                        <div class="form-group form-floating">
+                            <label for="fname">
+                                Nom : <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control" name="firstName" id="fname"
+                                placeholder="First name:" required />
+                            <div class="invalid-feedback">
+                                Veuillez renseigner ce champ.
+                            </div>
+                        </div>
+
+                        <div class="form-group form-floating">
+                            <label for="email">
+                                Email : <span class="text-danger">*</span>
+                            </label>
+                            <input class="form-control" type="email" name="email" id="email"
+                                placeholder="email@mail.com" required />
+                            <div class="invalid-feedback">
+                                Veuillez renseigner ce champ.
+                            </div>
+                        </div>
+
+                        <div class="form-group form-floating">
+                            <label for="login">
+                                Login : <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control" name="login" id="login" placeholder="Login:"
+                                required />
+                            <div class="invalid-feedback">
+                                Veuillez renseigner ce champ.
+                            </div>
+                        </div>
+
+                        <div class="form-group-inline-block form-floating">
+                            <label for="password">
+                                Mot de passe : <span class="text-danger">*</span>
+                            </label>
+                            <input class="form-control" type="password" name="password" id="password"
+                                placeholder="Abc123f5 :" required />
+                            <center><input class="form-check-inline" type="checkbox" onchange="maskUnmask()" /><span
+                                    class="">Masquer/Démasquer</span>
+                            </center>
+                            <div class="invalid-feedback">
+                                Veuillez renseigner ce champ.
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group form-floating">
+                            <label for="prof">
+                                Profession : <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control" name="profession" id="prof"
+                                placeholder="Profession:" required />
+                            <div class="invalid-feedback">
+                                Veuillez renseigner ce champ.
+                            </div>
+                        </div>
+                        <div class="form-group input-group mb-3">
+                            <label for="BDomain">Domaine commercial : <span class="text-danger">*</span></label>
+                            <span class="input-group-text"></span>
+                            <select class="form-control" name="BDomain" id="BDomain">
+                                <option disabled selected value="">Choisissez votre domaine commercial</option>
+                                <option th:each="domain : ${domains}" th:value="${domain.getId()}"
+                                    th:utext="${domain.getName()}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group form-floating">
+                            <label for="phone">
+                                Numéro de téléphone :
+                            </label>
+                            <input type="tel" class="form-control" name="phone" id="phone"
+                                placeholder="Phone number:" />
+                            <div class="invalid-feedback">
+                                Veuillez renseigner ce champ.
+                            </div>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <br><input class="btn btn-primary" type="submit" value="S'inscrire" />
+                            <input class="btn btn-secondary" type="reset" value="Vider les champs"
+                                onclick="confirm('Press a button!');" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:insert="footer :: myFooter"></div>
+</body>
+
+</html>

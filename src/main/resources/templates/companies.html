@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="header :: myHeader">
+
+    </div>
+    <title>Nos entreprises</title>
+</head>
+
+<body>
+    <div th:insert="navBar :: myNavBar"></div>
+
+    <section class="dark-wrapper opaqued parallax" data-parallax="scroll" data-image-src="assets/img/bg/business3.jpg"
+        data-speed="0.7">
+        <div class="section-inner pad-top-200">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 mt30 wow text-center">
+                        <h2 class="section-heading">Entreprises</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br /><br /><br />
+    <br /><br />
+    <div>
+        <form th:action="@{/companies}" method="get">
+            <div class="container">
+                <div class="w-25">
+                    <div>
+                        <label for="gov">
+                            Chercher par gouvernorat :
+                        </label>
+                        <select name="governorate" id="gov" class="form-control">
+                            <option>Choisissez la région</option>
+                            <option th:each="govern : ${governorates}" th:value="${govern}"
+                                th:utext="${govern}">
+                            </option>
+                        </select>
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="Chercher">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="contact-section-inner">
+        <div class="container">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Dénomination</th>
+                        <th>Raison sociale</th>
+                        <th>Gouvernorat</th>
+                        <th>Certification</th>
+                        <th>Activités</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="company, iStat : ${companyPage.content}" th:style="${iStat.odd}? 'font-weight: bold;'"
+                        th:alt-title="${iStat.even}? 'even' : 'odd'"
+                        th:onclick="|window.location.href='@{/companies/{denomination}(denomination=${company.denomination})}'|">
+
+                        <td th:text="${company.denomination}"></td>
+                        <td th:text="${company.companyName}"></td>
+                        <td th:text="${company.governorate}"></td>
+                        <td th:text="${company.certificate}"></td>
+                        <td th:text="${company.activities}"></td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <div th:if="${companyPage.totalPages > 0}">
+                <nav aria-label="Companies">
+                    <ul class="pagination">
+                        <li th:each="pageNumber : ${pageNumbers}">
+                            <a th:href="@{/companies(size=${companyPage.size}, page=${pageNumber}, governorate=${governorate})}"
+                                th:text=${pageNumber} th:class="${pageNumber==companyPage.number + 1} ? active : inactive"></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div th:insert="footer :: myFooter"></div>
+
+</body>
+
+</html>

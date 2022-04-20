@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
+    <title>Accounts management</title>
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <h1>User accounts</h1>
+        </div>
+        <hr />
+        <div>
+            <table class="table table-hover table-borderless caption-top mx-auto my-auto">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="text-center">
+                            Email
+                        </th>
+                        <th class="text-center">
+                            First name
+                        </th>
+                        <th class="text-center">
+                            Last name
+                        </th>
+                        <th class="text-center">
+                            Activated
+                        </th>
+                        <th class="text-center">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="account : ${accounts}">
+                        <td class="text-center" th:utext="${account.getUser().getEmail()}">
+
+                        </td>
+                        <td class="text-center" th:utext="${account.getUser().getFirstName()}">
+
+                        </td>
+                        <td class="text-center" th:utext="${account.getUser().getLastName()}">
+
+                        </td>
+                        <td class="text-center" th:utext="${account.isActive()} ? 'Active' : 'Inactive' ">
+
+                        </td>
+                        <td class="text-center">
+                            <span th:if="${account.isActive()}">
+                                <form th:action="@{/user/editstatus/{login}(login=${account.getLogin()})}"
+                                    th:method="put">
+                                    <input type="submit" class="btn btn-danger" value="Deactivate" />
+                                </form>
+                                <!-- <a class="btn btn-danger"
+                                    th:href="|@{/user/editstatus/}${account.getLogin()}|">Deactivate</a> -->
+                            </span>
+                            <span th:unless="${account.isActive()}">
+                                <form th:action="@{/user/editstatus/{login}(login=${account.getLogin()})}"
+                                    th:method="put">
+                                    <input type="submit" class="btn btn-primary" value="Activate" />
+                                </form>
+                                <!-- <a class="btn btn-primary"
+                                    th:href="|@{/user/editstatus/}${account.getLogin()}|">Activate</a> -->
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

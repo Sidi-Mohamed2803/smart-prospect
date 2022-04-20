@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <div th:replace="header :: myHeader"></div>
+
+    <title>Contactez-nous</title>
+
+</head>
+
+<body id="page-top" class="index">
+
+    <div class="master-wrapper">
+
+        <!-- <div class="preloader">
+            <div class="preloader-img">
+                <span class="loading-animation animate-flicker"><img src="assets/img/loading.GIF" alt="loading"/></span>
+            </div>
+        </div> -->
+
+        <div th:insert="navBar :: myNavBar"></div>
+
+        <div id="search-wrapper">
+            <button type="button" class="close">×</button>
+            <div class="vertical-center text-center">
+                <form>
+                    <input type="search" value="" placeholder="Enter Search Term" />
+                    <button type="submit" class="btn btn-primary btn-white">Search</button>
+                </form>
+            </div>
+        </div>
+
+        <section class="dark-wrapper opaqued parallax" data-parallax="scroll" data-image-src="assets/img/bg/bg2.jpg"
+            data-speed="0.7">
+            <div class="section-inner pad-top-200">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 mt30 wow text-center">
+                            <h2 class="section-heading">Contactez-nous</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="welcome">
+            <div class="section-inner nopaddingbottom">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="lead">Sold old ten are quit lose deal his sent. You correct how sex several far
+                                distant believe journey parties. We shyness enquire uncivil affixed it carried to. </p>
+                            <p>End sitting shewing who saw besides son musical adapted. Contrasted interested eat
+                                alteration pianoforte sympathize was. He families believed if no elegance interest
+                                surprise an. It abode wrong miles an so delay plate.</p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div id="message"></div>
+                            <form method="post" th:action="@{/mail/send-to-admin}" id="contactform" class="main-contact-form wow">
+                                <input type="text" class="form-control col-md-4" name="name" placeholder="Your Name *"
+                                    id="name" required data-validation-required-message="Please enter your name." />
+                                <input type="text" class="form-control col-md-4" name="fromEmail" placeholder="Your Email *"
+                                    id="fromEmail" required
+                                    data-validation-required-message="Please enter your email address." />
+                                <textarea name="body" class="form-control" id="body"
+                                    placeholder="Your Message *" required
+                                    data-validation-required-message="Please enter a message."></textarea>
+                                <input class="btn btn-primary mt30 pull-right" type="submit" name="submit"
+                                    value="Submit" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>>
+
+        <div th:insert="footer :: myFooter"></div>
+
+    </div>
+
+</body>
+
+</html>

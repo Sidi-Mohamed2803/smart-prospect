@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="header :: myHeader"></div>
+    <title>Enregistrez votre produit</title>
+</head>
+
+<body>
+    <div class="contact-section-inner">
+        <div class="container">
+            <div class="col-sm-8 col-sm-offset-2">
+                <form method="post" th:action="@{#}">
+                    <div class="form-group">
+                        <label for="type">Produit ou Service ?</label>
+                    <select name="type" id="type" class="form-control" required>
+                        <option selected>Choisissez...</option>
+                        <option value="Produit">Produit</option>
+                        <option value="Service">Service</option>
+                    </select>
+                    </div>
+                    <div id="inputs">
+                        <div class="form-group form-floating">
+                            <input type="text" class="form-control" name="reference" placeholder="Référence *" required
+                            data-validation-required-message="Veuillez renseigner la référence." />
+                        </div>
+                        <div class="form-group form-floating">
+                            <input type="text" class="form-control" name="name" placeholder="Nom *" required
+                            data-validation-required-message="Veuillez renseigner le nom." />
+                        </div>
+                        <div class="form-group form-floating">
+                            <input type="number" min="0" class="form-control" name="price" placeholder="Prix *" required
+                            data-validation-required-message="Veuillez renseigner le prix." />
+                        </div>
+                        <div class="form-group form-floating">
+                            <textarea name="description" class="form-control" placeholder="Description *" required
+                            data-validation-required-message="Veuillez renseigner une description."></textarea>
+                        </div>
+                        <input class="btn btn-primary mt30 pull-right" type="submit" name="submit"
+                            value="Enregistrer" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script src="assets/js/init.js"></script>
+</body>
+
+</html>

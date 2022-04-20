@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    <div th:replace="header :: myHeader"></div>
+
+    <!-- jQuery -->
+    <script src="assets/js/jquery.js"></script>
+
+    <title>404 Introuvable</title>
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            'use strict';
+            // set the date we're counting down to
+            var target_date = new Date('July, 31, 2016').getTime();
+            var days, hours, minutes, seconds;
+            var countdown = document.getElementById('countdown');
+            setInterval(function () {
+                var current_date = new Date().getTime();
+                var seconds_left = (target_date - current_date) / 1000;
+                days = parseInt(seconds_left / 86400);
+                seconds_left = seconds_left % 86400;
+                hours = parseInt(seconds_left / 3600);
+                seconds_left = seconds_left % 3600;
+                minutes = parseInt(seconds_left / 60);
+                seconds = parseInt(seconds_left % 60);
+                countdown.innerHTML = '<span class="days">' + days + ' <small>Days</small></span> <span class="hours">' + hours + ' <small>Hours</small></span> <span class="minutes">' + minutes + ' <small>Minutes</small></span> <span class="seconds">' + seconds + ' <small>Seconds</small></span>';
+            }, 1000);
+        });
+    </script>
+
+</head>
+
+<body id="page-top" class="index">
+
+    <div class="master-wrapper">
+
+        <!-- <div class="preloader">
+            <div class="preloader-img">
+                <span class="loading-animation animate-flicker"><img src="assets/img/loading.GIF"
+                        alt="loading" /></span>
+            </div>
+        </div> -->
+
+        <!-- Navigation -->
+        <div th:insert="navBar :: myNavBar"></div>
+
+        <div id="search-wrapper">
+            <button type="button" class="close">×</button>
+            <div class="vertical-center text-center">
+                <form>
+                    <input type="search" value="" placeholder="Enter Search Term" />
+                    <button type="submit" class="btn btn-primary btn-white">Search</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header id="headerwrap" class="fullheight dark-wrapper opaqued parallax" data-parallax="scroll"
+            data-image-src="assets/img/bg/bg5.jpg" data-speed="0.7">
+            <div class="container vertical-center">
+                <div class="intro-text vertical-center text-left smoothie">
+                    <div class="intro-heading wow fadeIn heading-font" data-wow-delay="0.2s"><span th:utext="${code}"></span></div>
+                    <div class="intro-sub-heading wow fadeIn secondary-font" data-wow-delay="0.4s"><span
+                            class="rotate" th:utext="${message}"></span></div>
+                </div>
+            </div>
+        </header>
+
+        <div th:insert="footer :: myFooter"></div>
+
+    </div>
+</body>
+
+</html>

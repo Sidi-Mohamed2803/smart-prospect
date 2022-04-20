@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="header :: myHeader"></div>
+    <title>Authentifiez vous</title>
+</head>
+
+<body>
+    <div class="contact-section-inner">
+        <div class="container d-flex justify-content-evenly">
+            <div class="col-sm-6 col-sm-offset-3">
+                <form method="post" th:action="@{/login}">
+                    <div id="inputs">
+                        <div class="form-group form-floating">
+                            <input type="text" class="form-control" name="username" placeholder="Votre login *" required
+                                data-validation-required-message="Veuillez renseigner votre login." />
+                        </div>
+                        <div class="form-group form-floating">
+                            <input type="password" class="form-control" name="password"
+                                placeholder="Votre mot de passe *" required
+                                data-validation-required-message="Veuillez renseigner votre mot de passe." />
+                        </div>
+                        <input class="btn btn-primary mt30 pull-right" type="submit" name="submit" value="Envoyer" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div th:insert="footer :: myFooter"></div>
+</body>
+
+</html>
