@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class UserService implements UserDetailsService {
     private final UserAccountRepository userAccountRepository;
     private final BusinessDomainRepository businessDomainRepository;
     private final RoleRepository roleRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
@@ -54,12 +56,11 @@ public class UserService implements UserDetailsService {
             userAccount.setRole(roleRepository.findByName("USER"));
             userAccount.setActive(true);
             userAccount.setUser(user);
-            userAccount.setPassword(userAccount.getPassword());
+            userAccount.setPassword(bCryptPasswordEncoder.encode(userAccount.getPassword()));
             user.getAccounts().add(userAccount);
 
             userRepository.save(user);
         }
-        log.info("WTH?!?!?!");
     }
 
     public List<User> getAll() {

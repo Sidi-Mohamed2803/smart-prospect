@@ -39,7 +39,7 @@ public class UserController {
         user.setPhoneNumber(phoneNumber);
         userService.addNewUser(user, userAccount);
         try {
-            response.sendRedirect("research");
+            response.sendRedirect("/");
         } catch (IOException e) {
             e.printStackTrace();
         }

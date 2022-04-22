@@ -31,10 +31,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
-    }
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+//    }
 
     @Autowired
     public void globalConfig(AuthenticationManagerBuilder auth, DataSource dataSource) throws Exception
@@ -53,34 +53,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    }
 
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable()
-//                .authorizeRequests()
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin().loginPage("/login")
-//                .permitAll()
-//                .defaultSuccessUrl("/");
-//        http.headers().defaultsDisabled().cacheControl();
-//    }
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
-        customAuthenticationFilter.setFilterProcessesUrl("login");
-        http.csrf().disable();
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/assets/**")
+                .permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin().loginPage("/login")
+                .permitAll()
+                .defaultSuccessUrl("/");
         http.headers().defaultsDisabled().cacheControl();
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/**").permitAll();
-        http.authorizeRequests().antMatchers("login/**").permitAll(); //The path inside this antMatchers will be accessible by anyone, even non-authenticated people
-        http.authorizeRequests().antMatchers(GET, "user/**").hasAnyAuthority("ROLE_USER");
-        http.authorizeRequests().antMatchers(POST, "user/admin/**").hasAnyAuthority("ROLE_ADMIN");
-        http.authorizeRequests().anyRequest().authenticated();
-        http.addFilter(customAuthenticationFilter);
-        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
+
+
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
+//        customAuthenticationFilter.setFilterProcessesUrl("login");
+//        http.csrf().disable();
+//        http.headers().defaultsDisabled().cacheControl();
+//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//        http.authorizeRequests().antMatchers("/**").permitAll();
+//        http.authorizeRequests().antMatchers("login/**").permitAll(); //The path inside this antMatchers will be accessible by anyone, even non-authenticated people
+//        http.authorizeRequests().antMatchers(GET, "user/**").hasAnyAuthority("ROLE_USER");
+//        http.authorizeRequests().antMatchers(POST, "user/admin/**").hasAnyAuthority("ROLE_ADMIN");
+//        http.authorizeRequests().anyRequest().authenticated();
+//        http.addFilter(customAuthenticationFilter);
+//        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+//    }
 
     @Bean
     @Override
