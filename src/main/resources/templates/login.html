@@ -4,24 +4,56 @@
 <head>
     <div th:replace="header :: myHeader"></div>
     <title>Authentifiez vous</title>
+
+    <!-- Show/Mask password script -->
+    <script src="/assets/js/personalJS/showPassword.js"></script>
+
 </head>
 
 <body>
+    <section class="dark-wrapper opaqued parallax" data-parallax="scroll" data-image-src="\assets\img\bg\gradient1.jpg"
+        data-speed="0.7">
+        <div class="section-inner pad-top-200">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 mt30 wow text-center">
+                        <h2 class="section-heading">Authentifiez-vous</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <div class="contact-section-inner">
         <div class="container d-flex justify-content-evenly">
             <div class="col-sm-6 col-sm-offset-3">
                 <form method="post" th:action="@{/login}">
                     <div id="inputs">
                         <div class="form-group form-floating">
-                            <input type="text" class="form-control" name="username" placeholder="Votre login *" required
+                            <label for="username">Votre login *</label>
+                            <input type="text" class="form-control" name="username" id="username"
+                                placeholder="Ex. : Luffy1234" required
                                 data-validation-required-message="Veuillez renseigner votre login." />
                         </div>
+                        <br>
                         <div class="form-group form-floating">
-                            <input type="password" class="form-control" name="password"
-                                placeholder="Votre mot de passe *" required
-                                data-validation-required-message="Veuillez renseigner votre mot de passe." />
+                            <label for="password">Votre mot de passe *</label>
+                            <input type="password" class="form-control" name="password" id="password" placeholder=""
+                                required data-validation-required-message="Veuillez renseigner votre mot de passe." />
                         </div>
-                        <input class="btn btn-primary mt30 pull-right" type="submit" name="submit" value="Envoyer" />
+                        <center>
+                            <input class="form-check-inline" type="checkbox" onchange="maskUnmask()" />
+                            <span class="">
+                                Masquer/Démasquer
+                            </span>
+                        </center>
+                        <br>
+                        <center>
+                            Si vous n'avez pas encore de compte, vous pouvez vous inscrire en <a
+                                href="/user/subscribe">cliquant
+                                ici</a>
+                        </center>
+                        <input class="btn btn-primary mt30 pull-right" type="submit" name="submit"
+                            value="S'authentifier" />
                     </div>
                 </form>
             </div>

@@ -24,14 +24,14 @@ public class ProductService {
         productRepository.delete(product);
     }
 
-    @Transactional
-    public void edit(Long id, double price, String description) {
-        Product product = productRepository.getById(id);
-        if (price > 0) {
-            product.setPrice(price);
-        }
-        if (description != null && !description.equals("")) {
-            product.setDescription(description);
-        }
-    }
+//    @Transactional
+//    public void edit(Long id, double price, String description) {
+//        Product product = productRepository.getById(id);
+//        if (price > 0) {
+//            product.setPrice(price);
+//        }
+//        if (description != null && !description.equals("")) {
+//            product.setDescription(description);
+//        }
+//    }
 }

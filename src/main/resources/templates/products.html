@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="header :: myHeader"></div>
+    <title>Votre catalogue</title>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <div th:insert="navBar :: myNavBar"></div>
+
+    <section class="dark-wrapper opaqued parallax" data-parallax="scroll" data-image-src="\assets\img\bg\bg5.jpg"
+        data-speed="0.7">
+        <div class="section-inner pad-top-200">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 mt30 wow text-center">
+                        <h2 class="section-heading">Votre catalogue</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container-fluid">
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="col" th:each="product : ${products}">
+                <div class="card text-center">
+                    <img alt="" th:src="*{'data:image/png;base64,'+{product.image}}"
+                        style="width: 150px; height: 150px;">
+                    <div class="card-body">
+                        <h4 class="card-title">Nom du <span th:utext="${product.type}"></span> : <span
+                                th:utext="${product.name}"></span></h4>
+                        <h5 class="card-text">Prix du <span th:utext="${product.type}"></span> : <span
+                                th:utext="${product.price}"></span> TND</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:insert="footer :: myFooter"></div>
+
+</body>
+
+</html>

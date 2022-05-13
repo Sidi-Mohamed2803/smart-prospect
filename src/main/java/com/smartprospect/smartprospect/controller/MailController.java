@@ -1,8 +1,12 @@
 package com.smartprospect.smartprospect.controller;
 
 import com.smartprospect.smartprospect.emailsender.EmailSenderService;
+import com.smartprospect.smartprospect.user.User;
+import com.smartprospect.smartprospect.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +22,12 @@ import java.io.IOException;
 @Controller @RequiredArgsConstructor @Slf4j @RequestMapping(path = "mail")
 public class MailController {
     private final EmailSenderService emailSenderService;
+    private final UserService userService;
 
     @GetMapping
     public String newMail(ModelMap modelMap, @RequestParam(name = "toEmail") String toEmail, @RequestParam(name = "denomination") String denomination) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.getByLogin(auth.getName());
         modelMap.addAttribute("toEmail", toEmail);
         modelMap.addAttribute("denomination", denomination);
         return "newEmail";

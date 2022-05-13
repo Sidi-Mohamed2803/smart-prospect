@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Collection;
 
 @Entity @Data
@@ -17,9 +14,8 @@ import java.util.Collection;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true) @AllArgsConstructor
 public class Catalog {
     @Id
-    @GeneratedValue
     @EqualsAndHashCode.Include
-    private Long id;
-    @OneToMany
+    private String id;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "catalog")
     private Collection<Product> products;
 }

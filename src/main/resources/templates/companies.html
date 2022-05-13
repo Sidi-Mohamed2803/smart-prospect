@@ -35,10 +35,17 @@
                         </label>
                         <select name="governorate" id="gov" class="form-control">
                             <option>Choisissez la région</option>
-                            <option th:each="govern : ${governorates}" th:value="${govern}"
-                                th:utext="${govern}">
+                            <option th:each="govern : ${governorates}" th:value="${govern}" th:utext="${govern}">
                             </option>
                         </select>
+                    </div>
+                    <br>
+                    <div>
+                        <label for="act">
+                            Activité
+                        </label>
+                        <input class="form-control" type="text" name="activity" id="act"
+                            placeholder="Ex. : Câble, savon, etc.">
                     </div>
                     <input class="btn btn-primary" type="submit" value="Chercher">
                 </div>
@@ -77,7 +84,8 @@
                     <ul class="pagination">
                         <li th:each="pageNumber : ${pageNumbers}">
                             <a th:href="@{/companies(size=${companyPage.size}, page=${pageNumber}, governorate=${governorate})}"
-                                th:text=${pageNumber} th:class="${pageNumber==companyPage.number + 1} ? active : inactive"></a>
+                                th:text=${pageNumber}
+                                th:class="${pageNumber==companyPage.number + 1} ? active : inactive"></a>
                         </li>
                     </ul>
                 </nav>

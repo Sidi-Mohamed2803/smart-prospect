@@ -28,7 +28,7 @@ import static org.springframework.http.HttpMethod.POST;
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(securedEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final UserDetailsService userDetailsService;
+    //private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 //    @Override
@@ -46,25 +46,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .rolePrefix("ROLE_");
     }
 
-//    @SuppressWarnings("deprecation")
-//    @Bean
-//    public NoOpPasswordEncoder passwordEncoder() {
-//        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
-//    }
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/assets/**")
-                .permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/user/signing-in").permitAll()
+                .antMatchers("/user/subscribe").permitAll()
+                .antMatchers("/assets/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login")
                 .permitAll()
                 .defaultSuccessUrl("/");
         http.headers().defaultsDisabled().cacheControl();
+        http.logout().logoutSuccessUrl("/");
     }
 
 

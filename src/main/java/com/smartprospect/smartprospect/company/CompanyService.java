@@ -47,7 +47,7 @@ public class CompanyService {
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
         List<Company> list;
-        List<Company> companies = (List<Company>) companyRepository.advancedResearch(governorate,activities);
+        List<Company> companies = (List<Company>) companyRepository.advancedResearch(governorate,"%"+activities+"%");
 
         if(companies.size() < startItem) {
             list = Collections.emptyList();

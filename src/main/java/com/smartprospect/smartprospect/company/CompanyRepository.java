@@ -14,6 +14,6 @@ public interface CompanyRepository extends JpaRepository<Company,String> {
     @Query(value = "Select distinct governorate from company", nativeQuery = true)
     Collection<String> findGovernorates();
 
-    @Query(value = "SELECT c FROM Company c WHERE c.governorate=':gov' AND c.activities LIKE '%:act%'")
+    @Query(value = "SELECT c FROM Company c WHERE c.governorate=:gov AND c.activities LIKE :act")
     Collection<Company> advancedResearch(@Param("gov") String governorate, @Param("act") String activities);
 }

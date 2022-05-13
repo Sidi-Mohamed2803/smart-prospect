@@ -30,23 +30,27 @@
                     <form method="post" th:action="@{/mail/send}">
                         <div id="inputs">
                             <div class="form-group form-floating">
+                                <label for="fromEmail">Envoyeur *</label>
                                 <input type="hidden" name="denomination" th:value="${denomination}">
-                                <input type="text" class="form-control" name="fromEmail" placeholder="Envoyeur *"
+                                <input type="text" class="form-control" name="fromEmail" id="fromEmail" placeholder=""
                                     required
                                     data-validation-required-message="Veuillez renseigner l'addresse de l'envoyeur." />
                             </div>
                             <div class="form-group form-floating">
-                                <input type="text" class="form-control" name="toEmail" placeholder="Destinataire *"
+                                <label for="toEmail">Destinataire *</label>
+                                <input type="text" class="form-control" name="toEmail" id="toEmail" placeholder=""
                                     required
                                     data-validation-required-message="Veuillez renseigner l'addresse de destination."
                                     th:value="${toEmail}" />
                             </div>
                             <div class="form-group form-floating">
-                                <input type="text" class="form-control" name="subject" placeholder="Objet *" required
-                                    data-validation-required-message="Veuillez renseigner l'objet." />
+                                <label for="subject">Objet *</label>
+                                <input type="text" class="form-control" name="subject" id="subject" placeholder=""
+                                    required data-validation-required-message="Veuillez renseigner l'objet." />
                             </div>
                             <div class="form-group form-floating">
-                                <textarea name="body" class="form-control" placeholder="Message *" required
+                                <label for="body">Message *</label>
+                                <textarea name="body" class="form-control" id="body" placeholder="" required
                                     data-validation-required-message="Veuillez renseigner un corps à votre mail."></textarea>
                             </div>
                             <input class="btn btn-primary mt30 pull-right" type="submit" name="submit"

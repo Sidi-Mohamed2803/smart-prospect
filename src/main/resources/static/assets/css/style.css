@@ -93,18 +93,18 @@ p.large {
     font-size: 16px
 }
 
-a,
+/* a,
 a:hover,
 a:focus,
 a:active,
 a.active {
     outline: 0;
     text-decoration: none
-}
+} */
 
-a {
+/* a {
     color: #333
-}
+} */
 
 a:hover,
 a:focus,

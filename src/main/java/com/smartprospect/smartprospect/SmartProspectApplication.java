@@ -27,8 +27,8 @@ public class SmartProspectApplication {
 //		CompanyScraper companyScraper = new CompanyScraper(companyService);
 //		UserAccountRepository userAccountRepository = context.getBean(UserAccountRepository.class);
 //		UserAccount userAccount = userAccountRepository.getById("Naruto2803");
-		//companyScraper.ScrapeIndustriesPIT();
-		//companyScraper.ScrapeServicesPIT();
+//		companyScraper.ScrapeIndustriesPIT();
+//		companyScraper.ScrapeServicesPIT();
 //		UserRepository userRepository = context.getBean(UserRepository.class);
 //		User user = userRepository.getById("sidikone63@gmail.com");
 //		userService.addNewUser(user, userAccount);

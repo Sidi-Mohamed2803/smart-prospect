@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class MyErrorController implements ErrorController {
@@ -16,9 +17,11 @@ public class MyErrorController implements ErrorController {
     @RequestMapping(path = "/error", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
     public String handleError(HttpServletRequest request, ModelMap modelMap) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        Object message = request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
 
         if (status != null) {
             Integer statusCode = Integer.valueOf(status.toString());
+            String error = message.toString();
             modelMap.addAttribute("code", statusCode);
 
             if(statusCode == HttpStatus.NOT_FOUND.value()) {
@@ -27,6 +30,8 @@ public class MyErrorController implements ErrorController {
                 modelMap.addAttribute("message", "Oups, il semblerait qu'un problème est survenu, ne vous inquiétez pas, nous nous occupons de tout, veuillez réessayez ultérieurement.");
             } else if (statusCode == HttpStatus.FORBIDDEN.value()) {
                 modelMap.addAttribute("message", "Désolé, vous n'avez pas les droits d'accès nécessaires, pour accéder à cette page.");
+            } else {
+                modelMap.addAttribute("message", error);
             }
         }
         return "error";
