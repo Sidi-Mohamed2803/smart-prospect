@@ -1,27 +1,44 @@
-
 <html xmlns:th="http://www.thymeleaf.org">
 
 <body>
     <div th:fragment="myHeader">
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="/assets/img/logo/smartways.svg" />
-        <link rel="apple-touch-icon" sizes="144x144" href="/assets/img/logo/smartways.svg" />
-        <link rel="apple-touch-icon" sizes="114x114" href="/assets/img/logo/smartways.svg" />
-        <link rel="apple-touch-icon" sizes="72x72" href="/assets/img/logo/smartways.svg" />
-        <link rel="apple-touch-icon" href="/assets/img/logo/smartways.svg" />
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="/kompleet/assets/img/logo/smartways.svg" />
+        <link rel="apple-touch-icon" sizes="144x144" href="/kompleet/assets/img/logo/smartways.svg" />
+        <link rel="apple-touch-icon" sizes="114x114" href="/kompleet/assets/img/logo/smartways.svg" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/kompleet/assets/img/logo/smartways.svg" />
+        <link rel="apple-touch-icon" href="/kompleet/assets/img/logo/smartways.svg" />
         <!-- Bootstrap Core CSS -->
-        <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="/assets/css/animate.css" rel="stylesheet" />
-        <link href="/assets/css/plugins.css" rel="stylesheet" />
+        <link href="/kompleet/assets/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="/kompleet/assets/css/animate.css" rel="stylesheet" />
+        <link href="/kompleet/assets/css/plugins.css" rel="stylesheet" />
 
         <!-- Custom CSS -->
-        <link href="/assets/css/style.css" rel="stylesheet" />
+        <link href="/kompleet/assets/css/style.css" rel="stylesheet" />
 
         <!-- Custom Fonts -->
-        <link href="/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <link href="/assets/css/pe-icons.css" rel="stylesheet" />
+        <link href="/kompleet/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="/kompleet/assets/css/pe-icons.css" rel="stylesheet" />
+
+        <!-- Bootstrap font awesome -->
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/fontawesome.min.css" integrity="sha384-zIaWifL2YFF1qaDiAo0JFgsmasocJ/rqu7LKYH8CoBEXqGbb9eO+Xi3s6fQhgFWM" crossorigin="anonymous"> -->
+
+        <style>
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-gap: 20px;
+
+            }
+
+            .filter {
+                display: block;
+                position: sticky;
+                top: 20px
+            }
+        </style>
     </div>
 </body>
 

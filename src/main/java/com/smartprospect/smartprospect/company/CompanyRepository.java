@@ -11,9 +11,14 @@ import java.util.Collection;
 public interface CompanyRepository extends JpaRepository<Company,String> {
     Collection<Company> findByGovernorate(String governorate);
 
+    Company findByDenomination(String denomination);
+
     @Query(value = "Select distinct governorate from company", nativeQuery = true)
     Collection<String> findGovernorates();
 
     @Query(value = "SELECT c FROM Company c WHERE c.governorate=:gov AND c.activities LIKE :act")
     Collection<Company> advancedResearch(@Param("gov") String governorate, @Param("act") String activities);
+
+    @Query(value = "SELECT c FROM Company c WHERE c.activities LIKE :act")
+    Collection<Company> getByActivities(@Param("act") String activities);
 }

@@ -34,6 +34,8 @@ public class CompanyController {
 
         if (governorate.equals("") && activities.equals(""))
             companyPage = companyService.getAllPaginated(PageRequest.of(currentPage - 1, pageSize));
+        else if (governorate.equals("") && !activities.equals(""))
+            companyPage = companyService.getAllPaginated(PageRequest.of(currentPage - 1, pageSize), activities);
         else {
             companyPage = companyService.getAllPaginated(PageRequest.of(currentPage - 1, pageSize), governorate, activities);
         }

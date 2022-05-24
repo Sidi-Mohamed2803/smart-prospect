@@ -1,7 +1,6 @@
 package com.smartprospect.smartprospect.user;
 
 import com.smartprospect.smartprospect.businessdomain.BusinessDomain;
-import com.smartprospect.smartprospect.catalog.Catalog;
 import com.smartprospect.smartprospect.product.Product;
 import com.smartprospect.smartprospect.useraccount.UserAccount;
 import lombok.AllArgsConstructor;
@@ -33,12 +32,12 @@ public class User implements Serializable {
     private String phoneNumber;
     @Lob
     @Column(length = Integer.MAX_VALUE, nullable = true)
-    private byte[] image;
+    private String image;
     @ManyToOne(fetch = FetchType.EAGER)
     @NotNull(message = "Veuillez sélectionner un domaine.")
     private BusinessDomain domain;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private UserAccount account;
-    @OneToOne
-    private Catalog catalog;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private Collection<Product> products = new ArrayList<Product>();
 }

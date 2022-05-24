@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BusinessDomainRepository extends JpaRepository<BusinessDomain,String> {
-    BusinessDomain findById(Long id);
+    //BusinessDomain findById(Long id);
 }

@@ -1,8 +1,7 @@
 package com.smartprospect.smartprospect.controller;
 
 import com.smartprospect.smartprospect.businessdomain.BusinessDomainRepository;
-import com.smartprospect.smartprospect.catalog.Catalog;
-import com.smartprospect.smartprospect.catalog.CatalogService;
+import com.smartprospect.smartprospect.businessdomain.BusinessDomainService;
 import com.smartprospect.smartprospect.product.Product;
 import com.smartprospect.smartprospect.user.User;
 import com.smartprospect.smartprospect.user.UserService;
@@ -27,12 +26,11 @@ import java.util.ArrayList;
 public class UserController {
     private final UserService userService;
     private final UserAccountService userAccountService;
-    private final CatalogService catalogService;
-    private final BusinessDomainRepository businessDomainRepository;
+    private final BusinessDomainService businessDomainService;
 
     @GetMapping(path = "subscribe")
     public String subscribePage(ModelMap modelMap, User user) {
-        modelMap.addAttribute("domains", businessDomainRepository.findAll());
+        modelMap.addAttribute("domains", businessDomainService.getAll());
         //modelMap.addAttribute("account", account);
         return "subscribe";
     }
@@ -47,16 +45,15 @@ public class UserController {
     @PostMapping(path = "signing-in")
     public String signingIn(@Valid @ModelAttribute("user") User user, BindingResult result, ModelMap modelMap) {
         if (result.hasErrors()) {
-            if (user.getDomain().getId()==0) {
-                modelMap.addAttribute("domains", businessDomainRepository.findAll());
+            if (user.getDomain().getName().equals("")) {
                 modelMap.addAttribute("domainCheck", "Veuillez selectionner un domaine");
                 modelMap.addAttribute("domainChecked", "false");
             }
-            modelMap.addAttribute("domains", businessDomainRepository.findAll());
+            modelMap.addAttribute("domains", businessDomainService.getAll());
             return "subscribe";
         }
-        if (user.getDomain().getId()==0) {
-            modelMap.addAttribute("domains", businessDomainRepository.findAll());
+        if (user.getDomain().getName().equals("")) {
+            modelMap.addAttribute("domains", businessDomainService.getAll());
             modelMap.addAttribute("domainCheck", "Veuillez selectionner un domaine");
             modelMap.addAttribute("domainChecked", "false");
             return "subscribe";
@@ -64,9 +61,6 @@ public class UserController {
 //        Long id = Long.valueOf(domainId);
 //        user.setDomain(businessDomainRepository.findById(id));
         //user.setAccount(account);
-        Catalog catalog = new Catalog(user.getEmail(), new ArrayList<Product>());
-        catalogService.addNew(catalog);
-        user.setCatalog(catalog);
         userService.addNewUser(user);
         return "login";
     }
@@ -74,7 +68,7 @@ public class UserController {
     @GetMapping(path = "admin")
     public String manageAccounts(ModelMap modelMap) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        modelMap.addAttribute("accounts", userAccountService.getAll());
+        modelMap.addAttribute("users", userService.getAll());
         return "admin";
     }
 

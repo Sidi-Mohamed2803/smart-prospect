@@ -36,30 +36,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="account : ${accounts}">
-                        <td class="text-center" th:utext="${account.getUser().getEmail()}">
+                    <tr th:each="user : ${users}">
+                        <td class="text-center" th:utext="${user.email}">
 
                         </td>
-                        <td class="text-center" th:utext="${account.getUser().getFirstName()}">
+                        <td class="text-center" th:utext="${user.firstName}">
 
                         </td>
-                        <td class="text-center" th:utext="${account.getUser().getLastName()}">
+                        <td class="text-center" th:utext="${user.lastName}">
 
                         </td>
-                        <td class="text-center" th:utext="${account.isActive()} ? 'Active' : 'Inactive' ">
+                        <td class="text-center" th:utext="${user.account.active} ? 'Active' : 'Inactive' ">
 
                         </td>
                         <td class="text-center">
-                            <span th:if="${account.isActive()}">
-                                <form th:action="@{/user/editstatus/{login}(login=${account.getLogin()})}"
+                            <span th:if="${user.account.active}">
+                                <form th:action="@{/user/editstatus/{login}(login=${user.account.login})}"
                                     th:method="put">
                                     <input type="submit" class="btn btn-danger" value="Deactivate" />
                                 </form>
                                 <!-- <a class="btn btn-danger"
                                     th:href="|@{/user/editstatus/}${account.getLogin()}|">Deactivate</a> -->
                             </span>
-                            <span th:unless="${account.isActive()}">
-                                <form th:action="@{/user/editstatus/{login}(login=${account.getLogin()})}"
+                            <span th:unless="${user.account.active}">
+                                <form th:action="@{/user/editstatus/{login}(login=${user.account.login})}"
                                     th:method="put">
                                     <input type="submit" class="btn btn-primary" value="Activate" />
                                 </form>

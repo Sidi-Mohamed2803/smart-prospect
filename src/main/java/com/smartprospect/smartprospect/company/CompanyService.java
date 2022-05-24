@@ -58,8 +58,25 @@ public class CompanyService {
 
         Page<Company> companyPage = new PageImpl<Company>(list, PageRequest.of(currentPage,pageSize),companies.size());
 
+        return companyPage;
+    }
 
-        log.info(governorate + " | " + activities + " | " + companyPage.getSize());
+    public Page<Company> getAllPaginated(Pageable pageable, String activities) {
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<Company> list;
+        List<Company> companies = (List<Company>) companyRepository.getByActivities("%"+activities+"%");
+
+        if(companies.size() < startItem) {
+            list = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, companies.size());
+            list = companies.subList(startItem, toIndex);
+        }
+
+        Page<Company> companyPage = new PageImpl<Company>(list, PageRequest.of(currentPage,pageSize),companies.size());
+
         return companyPage;
     }
 
@@ -73,7 +90,7 @@ public class CompanyService {
     }
 
     public Company getByDenomination(String denomination) {
-        return companyRepository.getById(denomination);
+        return companyRepository.findByDenomination(denomination);
     }
 
     public void addNew(Company company) {

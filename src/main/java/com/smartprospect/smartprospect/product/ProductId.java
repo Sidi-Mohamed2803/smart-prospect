@@ -12,6 +12,6 @@ import java.io.Serializable;
 @EqualsAndHashCode @AllArgsConstructor
 public class ProductId implements Serializable {
     //The 'catalog' attribute here has to have the same type of tha Catalog class id
-    private String catalog;
+    private String user;
     private String reference;
 }

@@ -19,6 +19,10 @@
                             <a href="https://www.linkedin.com/company/smart-ways-innovation/" target="_blank"><i
                                     class="fa fa-linkedin"></i></a>
                         </li>
+                        <li>
+                            <a href="https://www.youtube.com/channel/UC72lM99JaXdl47fZLyk9k9Q" target="_blank"><i
+                                    class="fa fa-youtube"></i></a>
+                        </li>
                     </ul>
 
                     <div class="pull-right text-right">
@@ -27,12 +31,20 @@
                                 <div>
                                     <i class="fa fa-envelope-o"></i>
                                     <a th:href="@{/contact-admin}" class="">
-                                        sidikone63@gmailcom
+                                        smartways.innovation@gmail.com
                                     </a>
                                 </div>
                             </li>
                             <li>
-                                <div class="meta-item"><i class="fa fa-mobile"></i> +216 27 841 802</div>
+                                <div class="meta-item"><i class="fa fa-mobile"></i> +216 20 406 511</div>
+                            </li>
+                            <li>
+                                <div th:if="${auth}">
+                                    <a href="/logout" class="btn btn-secondary btn-white">Se déconnecter</a>
+                                </div>
+                                <div th:unless="${auth}">
+                                    <a href="/login" class="btn btn-secondary btn-white">Se Connecter</a>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -48,10 +60,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand smoothie logo logo-light" href="/"><img src="/assets/img/logo/smartways.svg"
-                        height="200px" alt="logo"></a>
-                <a class="navbar-brand smoothie logo logo-dark" href="/"><img src="/assets/img/logo/smartways.svg"
-                        alt="logo"></a>
+                <a class="navbar-brand smoothie logo logo-light" href="/"><img
+                        src="/kompleet/assets/img/logo/smartways.svg" height="200px" alt="logo"></a>
+                <a class="navbar-brand smoothie logo logo-dark" href="/"><img
+                        src="/kompleet/assets/img/logo/smartways.svg" alt="logo"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -67,12 +79,12 @@
                         <a th:href="@{/companies}" class="">Entreprises</a>
                     </li> -->
                     <li class="">
-                        <a th:href="@{/products/new}" class="">Gérer catalogue</a>
+                        <a th:href="@{/products}" class="">Gérer catalogue</a>
                     </li>
                     <li class="">
-                        <a th:href="@{/contact-admin}" class="">Contacter l'administrateur</a>
+                        <a th:href="@{/contact-admin}" class="">Contactez-nous</a>
                     </li>
-                    <li><a href="#search"><i class="pe-7s-search"></i></a></li>
+                    <!--<li><a href="#search"><i class="pe-7s-search"></i></a></li>-->
 
                 </ul>
             </div>

@@ -26,6 +26,7 @@ public class EmailSenderService {
         message.setSubject(subject);
 
         mailSender.send(message);
+
     }
 
     public void sendEmailToAdmin(String fromEmail, String body) {

@@ -1,13 +1,15 @@
 package com.smartprospect.smartprospect.product;
 
-import com.smartprospect.smartprospect.catalog.Catalog;
+import com.smartprospect.smartprospect.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity @Data
 @NoArgsConstructor
@@ -21,7 +23,7 @@ public class Product {
     @Id
     @ManyToOne
     @EqualsAndHashCode.Include
-    private Catalog catalog;
+    private User user;
     @Id
     @EqualsAndHashCode.Include @NotBlank(message = "La référence ne peut pas être vide.")
     private String reference;
@@ -42,7 +44,7 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "catalog=" + catalog +
+                "user=" + user +
                 ", reference='" + reference + '\'' +
                 ", name='" + name + '\'' +
                 ", price=" + price +

@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 @Entity @Data @NoArgsConstructor @EqualsAndHashCode(onlyExplicitlyIncluded = true) @AllArgsConstructor
 public class BusinessDomain implements Serializable {
-    @Id @GeneratedValue @EqualsAndHashCode.Include
-    private Long id;
+    @Id @EqualsAndHashCode.Include
     private String name;
+    private String activities;
 }

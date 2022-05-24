@@ -27,7 +27,8 @@ public class MailController {
     @GetMapping
     public String newMail(ModelMap modelMap, @RequestParam(name = "toEmail") String toEmail, @RequestParam(name = "denomination") String denomination) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.getByLogin(auth.getName());
+        User currentUser = userService.getByLogin(auth.getName());
+        modelMap.addAttribute("fromEmail", currentUser.getEmail());
         modelMap.addAttribute("toEmail", toEmail);
         modelMap.addAttribute("denomination", denomination);
         return "newEmail";

@@ -8,16 +8,16 @@
     <title>Sign in</title>
 
     <!-- Show/Mask password script -->
-    <script src="/assets/js/personalJS/showPassword.js"></script>
+    <script src="/kompleet/assets/js/personalJS/showPassword.js"></script>
 
     <!-- Form validation script -->
-    <script src="/assets/js/personalJS/formValidation.js"></script>
+    <script src="/kompleet/assets/js/personalJS/formValidation.js"></script>
 
 </head>
 
 <body>
-    <section class="dark-wrapper opaqued parallax" data-parallax="scroll" data-image-src="\assets\img\bg\gradient1.jpg"
-        data-speed="0.7">
+    <section class="dark-wrapper opaqued parallax" data-parallax="scroll"
+        data-image-src="/kompleet/assets/img/bg/gradient1.jpg" data-speed="0.7">
         <div class="section-inner pad-top-200">
             <div class="container">
                 <div class="row">
@@ -127,10 +127,10 @@
                         <div class="form-group input-group mb-3">
                             <label for="BDomain">Domaine commercial : <span class="text-danger">*</span></label>
                             <span class="input-group-text"></span>
-                            <select class="form-control" name="domain" th:field="*{domain.id}" id="BDomain">
+                            <select class="form-control" name="domain" th:field="*{domain.name}" id="BDomain">
                                 <option value="0" selected>Choisissez votre domaine commercial</option>
-                                <option th:each="domain : ${domains}" th:value="${domain.getId()}"
-                                    th:utext="${domain.getName()}"></option>
+                                <option th:each="domain : ${domains}" th:value="${domain.name}"
+                                    th:utext="${domain.name}"></option>
                             </select>
                             <br>
                             <div>
@@ -155,9 +155,7 @@
                         </div>
 
                         <div class="form-group text-center">
-                            <br><input class="btn btn-primary" type="submit" value="S'inscrire" />
-                            <input class="btn btn-secondary" type="reset" value="Vider les champs"
-                                onclick="confirm('Press a button!');" />
+                            <br><input class="btn btn-secondary" type="submit" value="S'inscrire" />
                         </div>
                     </form>
                 </div>

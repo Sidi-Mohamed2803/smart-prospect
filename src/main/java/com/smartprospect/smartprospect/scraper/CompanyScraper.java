@@ -43,7 +43,7 @@ public class CompanyScraper {
 
                     Company company = new Company(companyInfoList.get(0).asNormalizedText(),
                             companyInfoList.get(1).asNormalizedText(),
-                            companyInfoList.get(2).asNormalizedText(),
+                            companyInfoList.get(2).asNormalizedText().replace(" - "," | "),
                             companyInfoList.get(3).asNormalizedText(),
                             companyInfoList.get(4).asNormalizedText(),
                             companyInfoList.get(5).asNormalizedText(),

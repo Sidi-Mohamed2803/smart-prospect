@@ -27,12 +27,27 @@ public class ProductController {
     private final ProductService productService;
     private final UserService userService;
 
+//    @GetMapping("edit/{ref}")
+//    public String editProduct(@PathVariable(name = "ref")String ref, RedirectAttributes redirectAttributes) {
+//        Product product = productService.
+//
+//        return "editProduct";
+//    }
+
     @GetMapping
     public String productsPage(ModelMap modelMap) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.getByLogin(auth.getName());
-        modelMap.addAttribute("products", currentUser.getCatalog().getProducts());
+        modelMap.addAttribute("products", currentUser.getProducts());
         return "products";
+    }
+
+    @GetMapping("catalog")
+    public String catalog(ModelMap modelMap) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.getByLogin(auth.getName());
+        modelMap.addAttribute("products", currentUser.getProducts());
+        return "catalog";
     }
 
     @GetMapping(path = "new")
@@ -52,9 +67,9 @@ public class ProductController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        product.setCatalog(currentUser.getCatalog());
+        product.setUser(currentUser);
         //log.info(product.toString());
-        currentUser.getCatalog().getProducts().add(product);
+        currentUser.getProducts().add(product);
         productService.addNew(product);
         userService.editUser(currentUser);
         return "redirect:/products";
