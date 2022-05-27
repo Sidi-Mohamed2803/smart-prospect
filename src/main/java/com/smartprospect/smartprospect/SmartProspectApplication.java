@@ -22,9 +22,9 @@ public class SmartProspectApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(SmartProspectApplication.class, args);
-//		CompanyService companyService = context.getBean(CompanyService.class);
+		CompanyService companyService = context.getBean(CompanyService.class);
 //		UserService userService = context.getBean(UserService.class);
-//		CompanyScraper companyScraper = new CompanyScraper(companyService);
+		CompanyScraper companyScraper = new CompanyScraper(companyService);
 //		UserAccountRepository userAccountRepository = context.getBean(UserAccountRepository.class);
 //		UserAccount userAccount = userAccountRepository.getById("Naruto2803");
 //		companyScraper.ScrapeIndustriesPIT();
@@ -38,4 +38,5 @@ public class SmartProspectApplication {
 	BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder(10);
 	}
+
 }

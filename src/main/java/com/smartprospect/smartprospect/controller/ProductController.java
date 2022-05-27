@@ -62,16 +62,18 @@ public class ProductController {
         }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.getByLogin(auth.getName());
-        try {
-            product.setImage(Base64.getEncoder().encodeToString(pic.getBytes()));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!pic.isEmpty() && pic != null) {
+            try {
+                product.setImage(Base64.getEncoder().encodeToString(pic.getBytes()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         product.setUser(currentUser);
         //log.info(product.toString());
         currentUser.getProducts().add(product);
         productService.addNew(product);
-        userService.editUser(currentUser);
+        userService.refresh(currentUser);
         return "redirect:/products";
     }
 }

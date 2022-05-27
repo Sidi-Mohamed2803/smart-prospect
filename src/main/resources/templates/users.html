@@ -43,14 +43,14 @@
         <!-- ============================================================== -->
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
-        <div class="page-wrapper" style="min-height: 250px;">
+        <div class="page-wrapper">
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Page vide</h4>
+                        <h4 class="page-title">Utilisateurs</h4>
                     </div>
                     <!-- <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
@@ -76,9 +76,58 @@
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
                         <div class="white-box">
-                            <h3 class="box-title">Blank Page</h3>
+                            <h3 class="box-title">Table des utilisateurs</h3>
+                            <!-- <p class="text-muted">Add class <code>.table</code></p> -->
+                            <div class="table-responsive">
+                                <table class="table text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">Prénom</th>
+                                            <th class="border-top-0">NOM</th>
+                                            <th class="border-top-0">Email</th>
+                                            <th class="border-top-0">Login</th>
+                                            <th class="border-top-0">Rôle</th>
+                                            <th class="border-top-0">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="user : ${users}">
+                                            <td th:utext="${user.firstName}"></td>
+                                            <td th:utext="${user.lastName}"></td>
+                                            <td th:utext="${user.email}"></td>
+                                            <td th:utext="${user.account.login}"></td>
+                                            <td th:utext="${user.account.role.description}"></td>
+                                            <td>
+                                                <span th:if="${user.account.active}">
+                                                    <form
+                                                        th:action="@{/admin/editstatus/{login}(login=${user.account.login})}"
+                                                        th:method="put">
+                                                        <input type="submit" class="btn btn-danger"
+                                                            value="Désactiver" />
+                                                    </form>
+                                                    <!-- <a class="btn btn-danger"
+                                                        th:href="|@{/user/editstatus/}${account.getLogin()}|">Deactivate</a> -->
+                                                </span>
+                                                <span th:unless="${user.account.active}">
+                                                    <form
+                                                        th:action="@{/admin/editstatus/{login}(login=${user.account.login})}"
+                                                        th:method="put">
+                                                        <input type="submit" class="btn btn-primary" value="Activer" />
+                                                    </form>
+                                                    <!-- <a class="btn btn-primary"
+                                                        th:href="|@{/user/editstatus/}${account.getLogin()}|">Activate</a> -->
+                                                </span>
+                                                <span>
+                                                    <a th:href="@{/admin/changerole/{login}(login=${user.account.login})}"
+                                                        class="btn btn-success">Changer rôle</a>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -117,13 +166,13 @@
     <script src="/ample-admin/plugins/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="/ample-admin/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/app-style-switcher.js"></script>
+    <script src="/ample-admin/js/app-style-switcher.js"></script>
     <!--Wave Effects -->
-    <script src="js/waves.js"></script>
+    <script src="/ample-admin/js/waves.js"></script>
     <!--Menu sidebar -->
-    <script src="js/sidebarmenu.js"></script>
+    <script src="/ample-admin/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
-    <script src="js/custom.js"></script>
+    <script src="/ample-admin/js/custom.js"></script>
 </body>
 
 </html>

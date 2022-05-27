@@ -23,9 +23,13 @@ public class UserAccountService {
     }
 
     public UserAccount getByLogin(String login) {
-        if (login!=null)
+        if (login==null)
             return null;
-        return userAccountRepository.getById(login);
+        return userAccountRepository.findByLogin(login).get();
+    }
+
+    public void save(UserAccount account) {
+        userAccountRepository.save(account);
     }
 
     @Transactional

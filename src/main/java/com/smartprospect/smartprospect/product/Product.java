@@ -16,10 +16,6 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true) @AllArgsConstructor
 @IdClass(ProductId.class)
 public class Product {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-//    @EqualsAndHashCode.Include
-//    private Long id;
     @Id
     @ManyToOne
     @EqualsAndHashCode.Include

@@ -43,14 +43,14 @@
         <!-- ============================================================== -->
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
-        <div class="page-wrapper" style="min-height: 250px;">
+        <div class="page-wrapper">
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Page vide</h4>
+                        <h4 class="page-title">Nos entreprises</h4>
                     </div>
                     <!-- <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
@@ -75,10 +75,83 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
+
+                <center>
+                    <a class="btn btn-primary" href="#">Mettre à jour la base de données</a>
+                </center>
+
+                <div>
+                    <form th:action="@{/admin/companies}" method="get">
+                        <div class="container">
+                            <div class="w-25">
+                                <div>
+                                    <label for="gov">
+                                        Chercher par gouvernorat :
+                                    </label>
+                                    <select name="governorate" id="gov" class="form-control">
+                                        <option value="">Choisissez la région</option>
+                                        <option th:each="govern : ${governorates}" th:value="${govern}"
+                                            th:utext="${govern}">
+                                        </option>
+                                    </select>
+                                </div>
+                                <br>
+                                <div>
+                                    <label for="act">
+                                        Activité
+                                    </label>
+                                    <input class="form-control" type="text" name="activity" id="act"
+                                        placeholder="Ex. : Câble, savon, etc.">
+                                </div>
+                                <input class="btn btn-secondary btn-white" style="color: black;" type="submit"
+                                    value="Chercher">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
                         <div class="white-box">
-                            <h3 class="box-title">Blank Page</h3>
+                            <h3 class="box-title">Table des entreprises</h3>
+                            <!-- <p class="text-muted">Add class <code>.table</code></p> -->
+                            <div class="table-responsive">
+                                <table class="table text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">Dénomination</th>
+                                            <th class="border-top-0">Raison sociale</th>
+                                            <th class="border-top-0">Gouvernorat</th>
+                                            <th class="border-top-0">Certification</th>
+                                            <th class="border-top-0">Activités</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="company, iStat : ${companyPage.content}"
+                                            th:style="${iStat.odd}? 'font-weight: bold;'"
+                                            th:alt-title="${iStat.even}? 'even' : 'odd'"
+                                            th:onclick="|window.location.href='@{/admin/companies/{denomination}(denomination=${company.denomination})}'|">
+
+                                            <td th:text="${company.denomination}"></td>
+                                            <td th:text="${company.companyName}"></td>
+                                            <td th:text="${company.governorate}"></td>
+                                            <td th:text="${company.certificate}"></td>
+                                            <td th:text="${company.activities}"></td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div th:if="${companyPage.totalPages > 0}">
+                                    <nav aria-label="Companies">
+                                        <ul class="pagination">
+                                            <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                                                <a th:href="@{/admin/companies(size=${companyPage.size}, page=${pageNumber}, governorate=${governorate})}"
+                                                    th:text=${pageNumber} class="page-link"></a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -117,13 +190,13 @@
     <script src="/ample-admin/plugins/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="/ample-admin/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/app-style-switcher.js"></script>
+    <script src="/ample-admin/js/app-style-switcher.js"></script>
     <!--Wave Effects -->
-    <script src="js/waves.js"></script>
+    <script src="/ample-admin/js/waves.js"></script>
     <!--Menu sidebar -->
-    <script src="js/sidebarmenu.js"></script>
+    <script src="/ample-admin/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
-    <script src="js/custom.js"></script>
+    <script src="/ample-admin/js/custom.js"></script>
 </body>
 
 </html>

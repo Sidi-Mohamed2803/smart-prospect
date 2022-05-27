@@ -1,5 +1,6 @@
 package com.smartprospect.smartprospect.user;
 
+import com.smartprospect.smartprospect.businessdomain.BusinessDomain;
 import com.smartprospect.smartprospect.businessdomain.BusinessDomainRepository;
 import com.smartprospect.smartprospect.role.RoleRepository;
 import com.smartprospect.smartprospect.useraccount.UserAccount;
@@ -12,11 +13,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
+import java.util.*;
 
 @Service @RequiredArgsConstructor @Slf4j
 public class UserService {
@@ -40,6 +41,10 @@ public class UserService {
 //        return new org.springframework.security.core.userdetails.User(userAccount.get().getLogin(), userAccount.get().getPassword(), authorities);
 //    }
 
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email).get();
+    }
+
     public void addNewUser(User user) {
         if (user!=null && user.getAccount()!=null) {
             Optional<User> userOptional = userRepository.findById(user.getEmail());
@@ -51,6 +56,7 @@ public class UserService {
                 throw new IllegalStateException("Login taken. Please enter another login.");
             }
 
+
             user.getAccount().setRole(roleRepository.findByName("USER"));
             user.getAccount().setActive(true);
             user.getAccount().setPassword(bCryptPasswordEncoder.encode(user.getAccount().getPassword()));
@@ -59,7 +65,25 @@ public class UserService {
         }
     }
 
-    public void editUser(User user) {
+    @Transactional
+    public void editUser(User user, String firstName, String lastName, String login, String profession, BusinessDomain domain, String phoneNumber, MultipartFile pic) {
+        User editedUser = userRepository.findByEmail(user.getEmail()).get();
+        editedUser.setFirstName(firstName);
+        editedUser.setLastName(lastName);
+        editedUser.getAccount().setLogin(login);
+        editedUser.setProfession(profession);
+        editedUser.setDomain(domain);
+        editedUser.setPhoneNumber(phoneNumber);
+        if (!pic.isEmpty() && pic != null) {
+            try {
+                editedUser.setImage(Base64.getEncoder().encodeToString(pic.getBytes()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void refresh(User user) {
         userRepository.save(user);
     }
 

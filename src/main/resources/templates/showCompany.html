@@ -26,7 +26,7 @@
         </section>
 
         <div th:if="${emailSent == 'true'}">
-            
+
         </div>
 
         <div th:unless="${emailSent == 'false'}">
@@ -114,7 +114,7 @@
                 <div th:if="${company.email == ''}"></div>
                 <div th:unless="${company.email == ''}">
                     <a th:href="|@{/mail(denomination=${company.denomination}, toEmail=${company.email})}|"
-                        class="btn btn-secondary btn-white mt30 pull-right">Contatcer</a>
+                        class="btn btn-secondary btn-white mt30 pull-right" style="color: black;">Contatcer</a>
                 </div>
 
             </div>

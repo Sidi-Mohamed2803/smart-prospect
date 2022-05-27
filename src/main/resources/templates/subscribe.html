@@ -39,7 +39,8 @@
                     <hr>
                     <span class="card-subtitle text-danger">*</span>: obligatoire<br>
                     <br>
-                    <form th:action="@{/user/signing-in}" method="post" th:object="${user}">
+                    <form th:action="@{/user/signing-in}" method="post" enctype="multipart/form-data"
+                        th:object="${user}">
                         <div class="form-group form-floating">
                             <label for="fname">
                                 Prénom : <span class="text-danger">*</span>
@@ -47,8 +48,10 @@
                             <input type="text" class="form-control" th:field="*{firstName}" name="firstName" id="fname"
                                 placeholder="" />
                             <br>
-                            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
-                                class="alert alert-danger"></span>
+                            <div>
+                                <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                                    class="alert alert-danger"></span>
+                            </div>
                         </div>
                         <div class="form-group form-floating">
                             <label for="lname">
@@ -57,9 +60,10 @@
                             <input type="text" class="form-control" th:field="*{lastName}" name="lastName" id="lname"
                                 placeholder="" />
                             <br>
-
-                            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
-                                class="alert alert-danger"></span>
+                            <div>
+                                <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                                    class="alert alert-danger"></span>
+                            </div>
                         </div>
 
                         <div class="form-group form-floating">
@@ -109,6 +113,18 @@
                                 </span>
                             </center>
                         </div>
+
+                        <div class="form-group-inline-block form-floating">
+                            <label for="confirmPassword">
+                                Confirmer mot de passe : <span class="text-danger">*</span>
+                            </label>
+                            <input class="form-control" type="password" name="confirmPassword" id="confirmPassword"
+                                placeholder="" />
+                            <br>
+                            <div>
+                                <!-- <span th:if="${}" class="alert alert-danger"></span> -->
+                            </div>
+                        </div>
                         <!-- </div> -->
 
                         <br />
@@ -151,11 +167,16 @@
                                 <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
                                     class="alert alert-danger"></span>
                             </div>
-
+                        </div>
+                        <div class="form-group custom-file">
+                            <label for="profilePic" class="custom-file-label">Ajoutez une photo</label>
+                            <input type="file" class="custom-file-input" name="pic" id="profilePic"
+                                accept="image/png, image/jpeg, image/jpg" />
                         </div>
 
                         <div class="form-group text-center">
-                            <br><input class="btn btn-secondary" type="submit" value="S'inscrire" />
+                            <br><input class="btn btn-secondary btn-white" style="color: black;" type="submit"
+                                value="S'inscrire" />
                         </div>
                     </form>
                 </div>

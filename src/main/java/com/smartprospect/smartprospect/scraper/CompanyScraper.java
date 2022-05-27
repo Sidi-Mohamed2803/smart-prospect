@@ -7,7 +7,11 @@ import com.smartprospect.smartprospect.company.Company;
 import com.smartprospect.smartprospect.company.CompanyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.annotation.Schedules;
+import org.springframework.stereotype.Service;
 
+import javax.ejb.Schedule;
 import javax.swing.text.html.HTML;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +22,7 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
+@Service
 public class CompanyScraper {
     private final CompanyService companyService;
 
@@ -26,6 +31,7 @@ public class CompanyScraper {
      * les informations des entreprises certifiéesen Tunisie disponibles à traver l'url suivant :
      * http://www.tunisieindustrie.nat.tn/fr/certifdbi.asp?action=list&idsect=&pagenum=1
      */
+    @Schedule(dayOfMonth = "First", hour = "2")
     public void ScrapeIndustriesPIT() {
         final String url = "http://www.tunisieindustrie.nat.tn/fr/certifdbi.asp?action=list&idsect=&pagenum=";
         for (int i = 1; i<=52; i++) {

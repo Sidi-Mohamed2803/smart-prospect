@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class User implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @NotNull(message = "Veuillez sélectionner un domaine.")
     private BusinessDomain domain;
+    //@Valid
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private UserAccount account;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")

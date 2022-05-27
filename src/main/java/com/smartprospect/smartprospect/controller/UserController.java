@@ -16,11 +16,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 
 @Controller @RequiredArgsConstructor @RequestMapping(path = "user") @Slf4j
 public class UserController {
@@ -38,12 +40,11 @@ public class UserController {
     @GetMapping(path = "{username}")
     public String viewProfile(@PathVariable(name = "username") String username, ModelMap modelMap) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
         return "profile";
     }
 
     @PostMapping(path = "signing-in")
-    public String signingIn(@Valid @ModelAttribute("user") User user, BindingResult result, ModelMap modelMap) {
+    public String signingIn(@Valid @ModelAttribute("user") User user, BindingResult result, @RequestParam(name = "pic", required = false) MultipartFile pic, @RequestParam(name = "confirmPassword")String confirmPassword, ModelMap modelMap) {
         if (result.hasErrors()) {
             if (user.getDomain().getName().equals("")) {
                 modelMap.addAttribute("domainCheck", "Veuillez selectionner un domaine");
@@ -58,9 +59,13 @@ public class UserController {
             modelMap.addAttribute("domainChecked", "false");
             return "subscribe";
         }
-//        Long id = Long.valueOf(domainId);
-//        user.setDomain(businessDomainRepository.findById(id));
-        //user.setAccount(account);
+        if (!pic.isEmpty() && pic != null) {
+            try {
+                user.setImage(Base64.getEncoder().encodeToString(pic.getBytes()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         userService.addNewUser(user);
         return "login";
     }
@@ -72,13 +77,5 @@ public class UserController {
         return "admin";
     }
 
-    @PutMapping(path = "editstatus/{login}")
-    public void editStatus(@PathVariable(name = "login") String login, HttpServletResponse response) {
-        userAccountService.changeStatus(login);
-        try {
-            response.sendRedirect("/user/admin");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 }
