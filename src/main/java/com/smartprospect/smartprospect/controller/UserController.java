@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,62 @@ public class UserController {
     @GetMapping(path = "{username}")
     public String viewProfile(@PathVariable(name = "username") String username, ModelMap modelMap) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return "profile";
+        User currentUser = userService.getByLogin(auth.getName());
+        modelMap.addAttribute("user", currentUser);
+        modelMap.addAttribute("fullName", currentUser.getFirstName()+" "+currentUser.getLastName());
+        modelMap.addAttribute("domains", businessDomainService.getAll());
+        if(String.valueOf(auth.getAuthorities()).equals("[ROLE_USER]")) {
+            modelMap.addAttribute("auth", true);
+        }
+        else {
+            modelMap.addAttribute("auth", false);
+        }
+
+        return "userProfile";
+    }
+
+    @PostMapping(path = "edit")
+    public String editProfile(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, @RequestParam(name = "pic", required = false) MultipartFile pic, ModelMap modelMap) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.getByLogin(auth.getName());
+        user.setEmail(currentUser.getEmail());
+        modelMap.addAttribute("user", currentUser);
+        if(String.valueOf(auth.getAuthorities()).equals("[ROLE_USER]")) {
+            modelMap.addAttribute("auth", true);
+        }
+        else {
+            modelMap.addAttribute("auth", false);
+        }
+        modelMap.addAttribute("fullName", currentUser.getFirstName()+" "+currentUser.getLastName());
+        modelMap.addAttribute("domains", businessDomainService.getAll());
+
+        BindingResult result = new BeanPropertyBindingResult(user, "user");
+
+        if (bindingResult.hasFieldErrors("firstName"))
+            result.addError(bindingResult.getFieldError("firstName"));
+        if (bindingResult.hasFieldErrors("lastName"))
+            result.addError(bindingResult.getFieldError("lastName"));
+        if (bindingResult.hasFieldErrors("account.login"))
+            result.addError(bindingResult.getFieldError("account.login"));
+        if (bindingResult.hasFieldErrors("profession"))
+            result.addError(bindingResult.getFieldError("profession"));
+        if (bindingResult.hasFieldErrors("phoneNumber"))
+            result.addError(bindingResult.getFieldError("phoneNumber"));
+
+        if (result.hasErrors()) {
+            if (user.getDomain().getName().equals("")) {
+                modelMap.addAttribute("domainCheck", "Veuillez selectionner un domaine");
+                modelMap.addAttribute("domainChecked", "false");
+            }
+            return "profile";
+        }
+        if (user.getDomain().getName().equals("")) {
+            modelMap.addAttribute("domainCheck", "Veuillez selectionner un domaine");
+            modelMap.addAttribute("domainChecked", "false");
+            return "profile";
+        }
+        userService.editUser(user, user.getFirstName(), user.getLastName(), user.getAccount().getLogin(), user.getProfession(), user.getDomain(), user.getPhoneNumber(), pic);
+        return "redirect:/user/"+currentUser.getEmail();
     }
 
     @PostMapping(path = "signing-in")
@@ -69,13 +125,4 @@ public class UserController {
         userService.addNewUser(user);
         return "login";
     }
-
-    @GetMapping(path = "admin")
-    public String manageAccounts(ModelMap modelMap) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        modelMap.addAttribute("users", userService.getAll());
-        return "admin";
-    }
-
-
 }

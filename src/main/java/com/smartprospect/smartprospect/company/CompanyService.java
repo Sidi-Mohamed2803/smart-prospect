@@ -89,6 +89,11 @@ public class CompanyService {
         return companyRepository.findGovernorates();
     }
 
+    public Collection<String> getActivities()
+    {
+        return companyRepository.findActivities();
+    }
+
     public Company getByDenomination(String denomination) {
         return companyRepository.findByDenomination(denomination);
     }

@@ -33,6 +33,8 @@ public class Product {
     @Lob
     @Column(nullable = true)
     private String image;
+    @NotNull(message = "Veuillez préciser si vous voulez que ce produit figure ou non sur le catalogue.\nPeut être modifié ultérieurement.")
+    private Boolean selected;
     @Column(nullable = false)
     @NotBlank(message = "Veuillez sélectionner un type.")
     private String type;

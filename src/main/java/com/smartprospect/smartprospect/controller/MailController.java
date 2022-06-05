@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +29,14 @@ public class MailController {
     public String newMail(ModelMap modelMap, @RequestParam(name = "toEmail") String toEmail, @RequestParam(name = "denomination") String denomination) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.getByLogin(auth.getName());
+        modelMap.addAttribute("user", currentUser);
+        if(String.valueOf(auth.getAuthorities()).equals("[ROLE_USER]")) {
+            modelMap.addAttribute("auth", true);
+        }
+        else {
+            modelMap.addAttribute("auth", false);
+        }
+
         modelMap.addAttribute("fromEmail", currentUser.getEmail());
         modelMap.addAttribute("toEmail", toEmail);
         modelMap.addAttribute("denomination", denomination);
@@ -35,8 +44,8 @@ public class MailController {
     }
 
     @PostMapping(path = "send")
-    public void sendEmail(@RequestParam(name = "denomination") String denomination, String fromEmail, String toEmail, String subject, String body, HttpServletResponse response, HttpServletRequest request) {
-        emailSenderService.sendEmail(fromEmail, toEmail, subject, body);
+    public void sendEmail(@RequestParam(name = "denomination") String denomination, String fromEmail, String toEmail, String subject, String body, @RequestParam(name = "pdf", required = false) MultipartFile pdf, HttpServletResponse response, HttpServletRequest request) {
+        emailSenderService.sendEmail(fromEmail, toEmail, subject, body, pdf);
         HttpSession session = request.getSession();
         try {
             response.sendRedirect("/companies/"+denomination+"?emailsent=true");

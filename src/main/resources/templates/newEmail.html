@@ -54,6 +54,11 @@
                                 <textarea name="body" class="form-control" id="body" placeholder="" required
                                     data-validation-required-message="Veuillez renseigner un corps à votre mail."></textarea>
                             </div>
+                            <div class="form-group custom-file">
+                                <label for="pdf" class="custom-file-label">Ajoutez votre catalogue</label>
+                                <input type="file" class="custom-file-input" name="pdf" id="pdf"
+                                    accept="application/pdf" />
+                            </div>
                             <a th:href="@{/file/download}">
                                 <i class="bi bi-file-pdf"></i>
                                 Générer catalogue

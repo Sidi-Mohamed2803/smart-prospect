@@ -2,10 +2,14 @@ package com.smartprospect.smartprospect.controller;
 
 import com.smartprospect.smartprospect.company.Company;
 import com.smartprospect.smartprospect.company.CompanyService;
+import com.smartprospect.smartprospect.user.User;
+import com.smartprospect.smartprospect.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +27,20 @@ import java.util.stream.IntStream;
 @RequestMapping(path = "companies") @Slf4j
 public class CompanyController {
     private final CompanyService companyService;
+    private final UserService userService;
 
     @GetMapping
     public String companies(ModelMap modelMap, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size, @RequestParam(name = "governorate", required = false)Optional<String> govern, @RequestParam(name = "activity", required = false) Optional<String> activity) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.getByLogin(auth.getName());
+        modelMap.addAttribute("user", currentUser);
+        if(String.valueOf(auth.getAuthorities()).equals("[ROLE_USER]")) {
+            modelMap.addAttribute("auth", true);
+        }
+        else {
+            modelMap.addAttribute("auth", false);
+        }
+
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(30);
         String governorate = govern.orElse("");
@@ -57,6 +72,16 @@ public class CompanyController {
 
     @GetMapping(path = "/{denomination}")
     public String showCompany(ModelMap modelMap, @PathVariable(name = "denomination")String denomination, @RequestParam(name = "emailsent", required = false) Optional<Boolean> emailSent) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.getByLogin(auth.getName());
+        modelMap.addAttribute("user", currentUser);
+        if(String.valueOf(auth.getAuthorities()).equals("[ROLE_USER]")) {
+            modelMap.addAttribute("auth", true);
+        }
+        else {
+            modelMap.addAttribute("auth", false);
+        }
+
         modelMap.addAttribute("company", companyService.getByDenomination(denomination));
         modelMap.addAttribute("emailSent", emailSent.orElse(null));
         return "showCompany";

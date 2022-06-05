@@ -50,7 +50,7 @@
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title" th:utext="${selectedUser.login}"></h4>
+                        <h4 class="page-title" th:utext="${domain.name}"></h4>
                     </div>
                     <!-- <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
@@ -78,16 +78,28 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="white-box">
-                            <h3 class="box-title">Changez le rôle de l'utilisateur <span
-                                    th:utext="${selectedUser.login}"></span></h3>
+                            <h3 class="box-title">Modifier le domaine : <span th:utext="${domain.name}"></span></h3>
                         </div>
-                        <h4>Rôle actuel : <span th:text="${selectedUser.role.description}"></span></h4>
-                        <form th:action="@{/admin/changingrole/{login}(login=${selectedUser.login})}" method="get">
-                            <select name="role">
-                                <option value="" selected>Choisissez le nouveau rôle...</option>
-                                <option th:each="role : ${roles}" th:value="${role.name}"
-                                    th:utext="${role.description}"></option>
-                            </select>
+                        <!-- <h4>Rôle actuel : <span th:text="${selectedUser.role.description}"></span></h4> -->
+                        <form th:action="@{/admin/business-domain/editing/{name}(name=${domain.name})}" method="get">
+                            <div class="form-group mb-4">
+                                <label class="col-md-12 p-0">Nom :</label>
+                                <div class="col-md-12 border-bottom p-0">
+                                    <input type="text" class="form-control p-0 border-0" th:value="${domain.name}"
+                                        disabled>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-4">
+                                <label class="col-md-12 p-0">Activité :</label>
+                                <div class="col-md-12 border-bottom p-0">
+                                    <select name="activity">
+                                        <option value="" selected>Choisissez des activités liées au domaine...</option>
+                                        <option th:each="activity : ${activities}" th:value="${activity}"
+                                            th:utext="${activity}"></option>
+                                    </select>
+                                </div>
+                            </div>
                             <input type="submit" class="btn btn-success" value="Enregistrer" />
                         </form>
                     </div>

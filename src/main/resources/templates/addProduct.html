@@ -12,8 +12,8 @@
     <div th:insert="navBar :: myNavBar"></div>
 
 
-    <section class="dark-wrapper opaqued parallax" data-parallax="scroll" data-image-src="/kompleet/assets/img/bg/bg5.jpg"
-        data-speed="0.7">
+    <section class="dark-wrapper opaqued parallax" data-parallax="scroll"
+        data-image-src="/kompleet/assets/img/bg/bg5.jpg" data-speed="0.7">
         <div class="section-inner pad-top-200">
             <div class="container">
                 <div class="row">
@@ -75,13 +75,29 @@
                             <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
                                 class="alert alert-danger"></span>
                         </div>
+                        <div class="btn-group" role="group">
+                            <label>Générer le catalogue avec ce produit/service ?</label>
+                            <br />
+                            <input type="radio" value="true" class="btn-check" th:field="*{selected}" name="selected"
+                                id="selectedYes" />
+                            <label for="selectedYes">Oui</label>
+                            <input type="radio" value="false" class="btn-check" th:field="*{selected}" name="selected"
+                                id="selectedNo" />
+                            <label for="selectedNo">Non</label>
+                            <br />
+                            <div>
+                                <span th:if="${#fields.hasErrors('selected')}" th:errors="*{selected}"
+                                    class="alert alert-danger"></span>
+                            </div>
+                        </div>
+                        <br />
                         <div class="form-group custom-file">
                             <label for="productPic" class="custom-file-label">Ajoutez une photo</label>
                             <input type="file" class="custom-file-input" name="pic" id="productPic"
                                 accept="image/png, image/jpeg, image/jpg" />
                         </div>
                         <input class="btn btn-secondary btn-white mt30 pull-right" type="submit" name="submit"
-                            value="Enregistrer" style="color: black;" />
+                            value="Enregistrer" style="color: black; border-color: black;" />
                     </div>
                 </form>
             </div>

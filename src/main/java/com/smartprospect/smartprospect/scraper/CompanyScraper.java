@@ -27,9 +27,8 @@ public class CompanyScraper {
     private final CompanyService companyService;
 
     /**
-     * Cette methode permet de faire le scraping d'un site spécifiquequi est " Le Portail de l'Industrie Tunisienne ", plus précisémen
-     * les informations des entreprises certifiéesen Tunisie disponibles à traver l'url suivant :
-     * http://www.tunisieindustrie.nat.tn/fr/certifdbi.asp?action=list&idsect=&pagenum=1
+     * Cette methode permet de faire le scraping d'un site spécifiquequi est " Le Portail de l'Industrie Tunisienne ", plus précisément les informations
+     * des entreprises certifiéesen Tunisie disponibles à traver l'url suivant : http://www.tunisieindustrie.nat.tn/fr/certifdbi.asp?action=list&idsect=&pagenum=1
      */
     @Schedule(dayOfMonth = "First", hour = "2")
     public void ScrapeIndustriesPIT() {
@@ -44,31 +43,17 @@ public class CompanyScraper {
                     HtmlPage companyInfoPage = homeIterator.next().click();
                     HtmlElement companyInfoPageDOM = companyInfoPage.getDocumentElement();
                     List<HtmlElement> companyInfoList = companyInfoPageDOM.getElementsByAttribute("td", "class", "last");
-
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-
-                    Company company = new Company(companyInfoList.get(0).asNormalizedText(),
-                            companyInfoList.get(1).asNormalizedText(),
-                            companyInfoList.get(2).asNormalizedText().replace(" - "," | "),
-                            companyInfoList.get(3).asNormalizedText(),
-                            companyInfoList.get(4).asNormalizedText(),
-                            companyInfoList.get(5).asNormalizedText(),
-                            companyInfoList.get(6).asNormalizedText(),
-                            companyInfoList.get(7).asNormalizedText(),
-                            companyInfoList.get(8).asNormalizedText(),
-                            companyInfoList.get(9).asNormalizedText(),
-                            companyInfoList.get(10).asNormalizedText(),
-                            companyInfoList.get(11).asNormalizedText(),
-                            companyInfoList.get(12).asNormalizedText(),
-                            companyInfoList.get(13).asNormalizedText(),
-                            companyInfoList.get(14).asNormalizedText(),
+                    Company company = new Company(companyInfoList.get(0).asNormalizedText(), companyInfoList.get(1).asNormalizedText(),
+                            companyInfoList.get(2).asNormalizedText().replace(" - "," | "), companyInfoList.get(3).asNormalizedText(),
+                            companyInfoList.get(4).asNormalizedText(), companyInfoList.get(5).asNormalizedText(), companyInfoList.get(6).asNormalizedText(),
+                            companyInfoList.get(7).asNormalizedText(), companyInfoList.get(8).asNormalizedText(), companyInfoList.get(9).asNormalizedText(),
+                            companyInfoList.get(10).asNormalizedText(), companyInfoList.get(11).asNormalizedText(), companyInfoList.get(12).asNormalizedText(),
+                            companyInfoList.get(13).asNormalizedText(), companyInfoList.get(14).asNormalizedText(),
                             LocalDate.parse(companyInfoList.get(15).asNormalizedText(),formatter),
                             Double.valueOf(String.valueOf(companyInfoList.get(16).asNormalizedText().equals("") ? 0 : companyInfoList.get(16).asNormalizedText().replace(" ",""))),
-                            Integer.parseInt(companyInfoList.get(17).asNormalizedText().replace(" ","")),
-                            "Industrie"
-                    );
+                            Integer.parseInt(companyInfoList.get(17).asNormalizedText().replace(" ","")), "Industrie");
                     companyService.addNew(company);
-
                     //La ligne suivante consiste à retourner vers la page où se trouvent la liste des entreprises
                     //sans quoi nous n'aurions que les informations de la première entreprise en boucle
                     webClient.getCurrentWindow().getHistory().back();

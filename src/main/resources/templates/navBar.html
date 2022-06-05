@@ -84,6 +84,9 @@
                     <li class="">
                         <a th:href="@{/contact-admin}" class="">Contactez-nous</a>
                     </li>
+                    <li class="" th:if="${auth}">
+                        <a th:href="@{/user/{username}(username=${user.email})}" class="">Profil</a>
+                    </li>
                     <!--<li><a href="#search"><i class="pe-7s-search"></i></a></li>-->
 
                 </ul>

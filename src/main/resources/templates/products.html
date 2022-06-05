@@ -32,7 +32,8 @@
 
     <br>
     <div class="container text-center">
-        <a th:href="@{/products/new}" class="btn btn-secondary btn-white" style="color: black;">Ajouter un nouveau
+        <a th:href="@{/products/new}" class="btn btn-secondary btn-white"
+            style="color: black; border-color: black;">Ajouter un nouveau
             produit/service</a>
         <br /> <br /> <br />
 
@@ -48,13 +49,19 @@
                             <h5 class="card-text">Prix du <span th:utext="${product.type}"></span> : <span
                                     th:utext="${product.price}"></span> TND</h5>
                             <p class="card-text" th:utext="${product.description}"></p>
+                            <p class="card-text">Figure dans le catalogue généré :
+                                <span th:if="${product.selected}">Oui</span>
+                                <span th:unless="${product.selected}">Non</span>
+                            </p>
                             <div>
                                 <ul class="list-inline">
                                     <li>
-                                        <a href="#"><i class="fa fa-edit"></i></a>
+                                        <a th:href="@{/products/edit/{ref}(ref=${product.reference})}"><i
+                                                class="fa fa-edit"></i></a>
                                     </li>
                                     <li>
-                                        <a href="#"><i class="fa fa-trash"></i></a>
+                                        <a th:attr="onclick=|ConfirmDelete('${product.reference}')|"><i
+                                                class="fa fa-trash"></i></a>
                                     </li>
                                 </ul>
                             </div>
@@ -67,6 +74,15 @@
     <br>
 
     <div th:insert="footer :: myFooter"></div>
+
+    <script>
+        function ConfirmDelete(reference) {
+            var result = confirm("Êtes-vous sûr de vouloir supprimer le produit/service " + reference + " ?");
+            if (result) {
+                window.location.href = '/products/delete/' + reference;
+            }
+        }
+    </script>
 
 </body>
 

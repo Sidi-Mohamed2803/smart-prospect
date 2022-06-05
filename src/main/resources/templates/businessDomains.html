@@ -9,6 +9,13 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <style>
+        .right {
+            display: flex;
+            justify-content: right;
+        }
+    </style>
 </head>
 
 <body>
@@ -43,14 +50,14 @@
         <!-- ============================================================== -->
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
-        <div class="page-wrapper" style="min-height: 250px;">
+        <div class="page-wrapper">
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
             <div class="page-breadcrumb bg-white">
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title" th:utext="${selectedUser.login}"></h4>
+                        <h4 class="page-title">Domaines commerciaux</h4>
                     </div>
                     <!-- <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
@@ -76,20 +83,35 @@
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
                         <div class="white-box">
-                            <h3 class="box-title">Changez le rôle de l'utilisateur <span
-                                    th:utext="${selectedUser.login}"></span></h3>
+                            <h3 class="box-title">Table des Domaines commerciaux</h3>
+                            <!-- <p class="text-muted">Add class <code>.table</code></p> -->
+                            <div class="right">
+                                <a href="/admin/add-domain" class="btn btn-primary btn-white">Ajouter nouveau domaine</a>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="border-top-0">Nom</th>
+                                            <th class="border-top-0">Activités</th>
+                                            <th class="border-top-0">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="domain : ${domains}">
+                                            <td th:utext="${domain.name}"></td>
+                                            <td th:utext="${domain.activities}"></td>
+                                            <td>
+                                                <a th:href="@{/admin/editdomain/{name}(name=${domain.name})}"
+                                                    class="btn btn-success">Modifier le domaine</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <h4>Rôle actuel : <span th:text="${selectedUser.role.description}"></span></h4>
-                        <form th:action="@{/admin/changingrole/{login}(login=${selectedUser.login})}" method="get">
-                            <select name="role">
-                                <option value="" selected>Choisissez le nouveau rôle...</option>
-                                <option th:each="role : ${roles}" th:value="${role.name}"
-                                    th:utext="${role.description}"></option>
-                            </select>
-                            <input type="submit" class="btn btn-success" value="Enregistrer" />
-                        </form>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -127,13 +149,13 @@
     <script src="/ample-admin/plugins/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="/ample-admin/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/app-style-switcher.js"></script>
+    <script src="/ample-admin/js/app-style-switcher.js"></script>
     <!--Wave Effects -->
-    <script src="js/waves.js"></script>
+    <script src="/ample-admin/js/waves.js"></script>
     <!--Menu sidebar -->
-    <script src="js/sidebarmenu.js"></script>
+    <script src="/ample-admin/js/sidebarmenu.js"></script>
     <!--Custom JavaScript -->
-    <script src="js/custom.js"></script>
+    <script src="/ample-admin/js/custom.js"></script>
 </body>
 
 </html>

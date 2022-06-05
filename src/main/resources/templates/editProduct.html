@@ -12,8 +12,8 @@
     <div th:insert="navBar :: myNavBar"></div>
 
 
-    <section class="dark-wrapper opaqued parallax" data-parallax="scroll" data-image-src="/kompleet/assets/img/bg/bg5.jpg"
-        data-speed="0.7">
+    <section class="dark-wrapper opaqued parallax" data-parallax="scroll"
+        data-image-src="/kompleet/assets/img/bg/bg5.jpg" data-speed="0.7">
         <div class="section-inner pad-top-200">
             <div class="container">
                 <div class="row">
@@ -30,10 +30,11 @@
             <br /><br /><br />
             <br /><br />
             <div class="col-sm-8 col-sm-offset-2">
-                <form method="post" th:action="@{/products/add}" enctype="multipart/form-data" th:object="${product}">
+                <form method="post" th:action="@{/products/editing}" enctype="multipart/form-data"
+                    th:object="${product}">
                     <div class="form-group">
                         <label for="type">Produit ou Service ?</label>
-                        <select name="type" id="type" th:field="*{type}" class="form-control">
+                        <select name="type" disabled id="type" th:field="*{type}" class="form-control">
                             <option selected value="">Choisissez...</option>
                             <option value="Produit">Produit</option>
                             <option value="Service">Service</option>
@@ -43,10 +44,11 @@
                             class="alert alert-danger"></span>
                     </div>
                     <div id="inputs">
+                        <input type="hidden" name="reference" th:value="${product.reference}" />
                         <div class="form-group form-floating">
                             <label for="ref">Référence *</label>
-                            <input type="text" class="form-control" th:field="*{reference}" name="reference" id="ref"
-                                placeholder="" disabled/>
+                            <input type="text" class="form-control" th:field="*{reference}" name="" id="ref"
+                                placeholder="" disabled />
                             <br>
                             <span th:if="${#fields.hasErrors('reference')}" th:errors="*{reference}"
                                 class="alert alert-danger"></span>
@@ -75,13 +77,28 @@
                             <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
                                 class="alert alert-danger"></span>
                         </div>
+                        <div class="btn-group" role="group">
+                            <label>Générer le catalogue avec ce produit/service ?</label>
+                            <br />
+                            <input type="radio" value="true" class="btn-check" th:field="*{selected}" name="selected"
+                                id="selectedYes" />
+                            <label for="selectedYes">Oui</label>
+                            <input type="radio" value="false" class="btn-check" th:field="*{selected}" name="selected"
+                                id="selectedNo" />
+                            <label for="selectedNo">Non</label>
+                            <br />
+                            <div>
+                                <span th:if="${#fields.hasErrors('selected')}" th:errors="*{selected}"
+                                    class="alert alert-danger"></span>
+                            </div>
+                        </div>
                         <div class="form-group custom-file">
                             <label for="productPic" class="custom-file-label">Ajoutez une photo</label>
                             <input type="file" class="custom-file-input" name="pic" id="productPic"
                                 accept="image/png, image/jpeg, image/jpg" />
                         </div>
                         <input class="btn btn-secondary btn-white mt30 pull-right" type="submit" name="submit"
-                            value="Enregistrer" style="color: black;" />
+                            value="Enregistrer" style="color: black; border-color: black;" />
                     </div>
                 </form>
             </div>

@@ -1,5 +1,6 @@
 package com.smartprospect.smartprospect.controller;
 
+import com.smartprospect.smartprospect.businessdomain.BusinessDomain;
 import com.smartprospect.smartprospect.businessdomain.BusinessDomainService;
 import com.smartprospect.smartprospect.company.Company;
 import com.smartprospect.smartprospect.company.CompanyService;
@@ -126,13 +127,11 @@ public class AdminController {
                 modelMap.addAttribute("domainCheck", "Veuillez selectionner un domaine");
                 modelMap.addAttribute("domainChecked", "false");
             }
-            log.info(currentUser.getEmail()+"lklvll");
             return "profile";
         }
         if (user.getDomain().getName().equals("")) {
             modelMap.addAttribute("domainCheck", "Veuillez selectionner un domaine");
             modelMap.addAttribute("domainChecked", "false");
-            log.info(currentUser.getEmail()+"lklvllijtirjth888");
             return "profile";
         }
         userService.editUser(user, user.getFirstName(), user.getLastName(), user.getAccount().getLogin(), user.getProfession(), user.getDomain(), user.getPhoneNumber(), pic);
@@ -146,6 +145,49 @@ public class AdminController {
         modelMap.addAttribute("user", currentUser);
         modelMap.addAttribute("users", userService.getAll());
         return "users";
+    }
+
+    @GetMapping("business-domains")
+    public String domains(ModelMap modelMap) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.getByLogin(auth.getName());
+        modelMap.addAttribute("user", currentUser);
+        modelMap.addAttribute("users", userService.getAll());
+        modelMap.addAttribute("domains", businessDomainService.getAll());
+        return "businessDomains";
+    }
+
+    @GetMapping("editdomain/{name}")
+    public String editDomain(ModelMap modelMap, @PathVariable(name = "name") String name) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.getByLogin(auth.getName());
+        modelMap.addAttribute("user", currentUser);
+        modelMap.addAttribute("users", userService.getAll());
+        modelMap.addAttribute("domain", businessDomainService.getByName(name));
+        modelMap.addAttribute("activities", companyService.getActivities());
+        return "editBusinessDomain";
+    }
+
+    @GetMapping("add-domain")
+    public String addDomain(ModelMap modelMap) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.getByLogin(auth.getName());
+        modelMap.addAttribute("user", currentUser);
+        modelMap.addAttribute("users", userService.getAll());
+        modelMap.addAttribute("activities", companyService.getActivities());
+        return "addDomain";
+    }
+
+    @PostMapping("saving-domain")
+    public String saveDomain(ModelMap modelMap, BusinessDomain domain) {
+        businessDomainService.save(domain);
+        return "redirect:/admin/business-domains";
+    }
+
+    @GetMapping("business-domain/editing/{name}")
+    public String editingDomain(ModelMap modelMap, @PathVariable(name = "name") String name, String activity ) {
+        businessDomainService.edit(name,activity);
+        return "redirect:/admin/business-domains";
     }
 
 //    @GetMapping("update")
